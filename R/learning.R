@@ -12,3 +12,5 @@ mean(2:6)
 # Loading packages --------------------------------------------------------
 library(tidyverse)
 
+#Tester om GitHub fanger når jeg ændrer i min fil
+
