@@ -14,3 +14,4 @@ library(tidyverse)
 
 #Tester om GitHub fanger når jeg ændrer i min fil
 
+#Tester konflikt (skrevet i repo)
