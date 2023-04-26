@@ -87,3 +87,63 @@ rename(blood_pressure, bp_systolic = bp_sys_ave)
 nhanes_small %>%
   select(starts_with("bp")) %>%
   rename(bp_systolic = bp_sys_ave)
+
+
+# Filtering ---------------------------------------------------------------
+
+nhanes_small %>%
+  filter(phys_active == "No")
+
+nhanes_small %>%
+  filter(phys_active == "Yes")
+
+nhanes_small %>%
+  filter(phys_active != "No")
+
+nhanes_small %>%
+  filter(bmi == 25)
+
+nhanes_small %>%
+  filter(bmi < 25)
+
+nhanes_small %>%
+  filter(bmi >= 25)
+
+
+# Combining logical operators ---------------------------------------------
+# Option + I is "or" logical vector
+nhanes_small %>%
+  filter(bmi >= 25 & phys_active == "No")
+
+nhanes_small %>%
+  filter(bmi >= 25 | phys_active == "No")
+
+
+# Sorting data ------------------------------------------------------------
+# Sorting data on age
+nhanes_small %>%
+  arrange(age)
+
+# Sorting in descending order
+nhanes_small %>%
+  arrange(desc(age))
+
+# Arranging on both education and age
+nhanes_small %>%
+  arrange(education, age)
+
+# Transforming data -------------------------------------------------------
+# Overwrite the old "age".
+nhanes_small %>%
+  mutate(age = age * 12)
+
+# New variable
+nhanes_small %>%
+  mutate(age_months = age * 12)
+
+nhanes_small %>%
+  mutate(log_bmi = log(bmi))
+
+# Checking whether a person is old
+nhanes_small %>%
+  mutate(old = if_else(age >= 30, "Yes", "No"))
