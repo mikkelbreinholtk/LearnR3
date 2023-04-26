@@ -6,7 +6,9 @@ TODO: Add more to the title of your project here
 
 # LearnR3:
 
-TODO: Give a brief stupido of what your project is about
+
+TODO: Give a brief blablabla of what your project is about
+
 
 This project...
 
