@@ -162,3 +162,69 @@ nhanes_small %>%
   ggplot(aes(x = diabetes, y = bmi)) +
   geom_violin(na.rm = TRUE)
 ```
+
+## Exercise to make plots with one or two variables
+
+```{r}
+library(NHANES)
+nhanes_exercise <- NHANES %>%
+  rename_with(snakecase::to_snake_case) %>%
+  rename(sex = gender)
+```
+
+```{r}
+#| label: fig-age-t2dm
+#| fig-cap: "Density of age and presence of diabetes"
+#| fig-subcap:
+#|   - "Age"
+#|   - "Presence of diabetes"
+#| layout-ncol: 2
+
+
+nhanes_exercise %>% 
+    ggplot(aes(x = age)) + 
+    geom_density(na.rm = TRUE)
+
+
+nhanes_exercise %>% 
+    filter(!is.na(diabetes)) %>% 
+    ggplot(aes(x = diabetes)) + 
+    geom_density(na.rm = TRUE)
+    
+```
+
+```{r}
+#| label: fig-smoke-adults
+#| fig-cap: The counts of adults older than 20 currently smoking
+
+library(wesanderson)
+
+nhanes_exercise %>% 
+    filter(!is.na(smoke_now), age >= 20) %>% 
+    ggplot(aes(x = smoke_now)) + 
+    geom_bar() + 
+    scale_fill_manual(values = wes_palette("Royal1"))
+```
+
+
+### Plotting three or more variables
+
+```{r}
+#Plot systolic BP in relation to educational status and diabetes
+nhanes_small %>% 
+    filter(!is.na(diabetes), !is.na(education)) %>% 
+    ggplot(aes(x = education, y = bp_sys_ave, colour = diabetes)) +
+    geom_boxplot(na.rm = TRUE) + 
+    scale_color_manual(values = wes_palette("BottleRocket2"))
+    
+    
+```
+
+```{r}
+#Add colour to a scatterplot, when visualizin 3 variables. Here BMI, Systolic BP and Age
+
+nhanes_small %>% 
+    ggplot(aes(x = bmi, y = bp_sys_ave, colour = age)) + 
+    geom_point(na.rm = TRUE)
+```
+
