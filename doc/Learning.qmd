@@ -116,3 +116,49 @@ nhanes_small %>%
   ggplot(aes(x = diabetes)) +
   geom_bar()
 ```
+
+
+### Having fun with two variables
+```{r}
+nhanes_small %>%
+  ggplot(aes(x = bmi, y = bp_sys_ave)) +
+  geom_hex(na.rm = TRUE)
+```
+
+```{r}
+# Add a smoooooooooooothing line with CI
+
+nhanes_small %>%
+  filter(age >= 30) %>%
+  ggplot(aes(x = bmi, y = bp_sys_ave)) +
+  geom_hex(na.rm = TRUE) +
+  geom_smooth(na.rm = TRUE)
+```
+
+
+```{r}
+# Two categorical variables
+nhanes_small %>%
+  filter(!is.na(education), !is.na(diabetes)) %>%
+  ggplot(aes(x = diabetes, fill = education)) +
+  geom_bar()
+```
+
+
+```{r}
+# "dodged" barplot
+nhanes_small %>%
+  filter(!is.na(diabetes), !is.na(education)) %>%
+  ggplot(aes(x = diabetes, fill = education)) +
+  geom_bar(position = position_dodge())
+```
+
+### Plotting continous data
+
+```{r}
+# Using mixed data
+nhanes_small %>%
+  filter(!is.na(diabetes), bmi <= 60) %>%
+  ggplot(aes(x = diabetes, y = bmi)) +
+  geom_violin(na.rm = TRUE)
+```
