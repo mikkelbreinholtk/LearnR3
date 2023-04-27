@@ -1,7 +1,9 @@
 ---
 title: "Reproducible document"
 author: "Mikkel Breinholt Kjær"
-format: html
+format:
+    html:
+        theme: quartz
 ---
 
 Årets vinder af Cavling Prisen ses i @fig-kitten-attack
@@ -45,4 +47,72 @@ nhanes_small %>%
   knitr::kable(caption = "Mean vaules of age and BMI by education- and diabetes status")
 ```
 
+## Visualizing data
 
+```{r}
+# Creating a histogram for BMI
+ggplot(nhanes_small, aes(x = bmi)) +
+  geom_histogram()
+
+# Laver plot med piping
+nhanes_small %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram()
+```
+
+```{r}
+# Creating a histogram for BMI without missing values
+nhanes_small %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE)
+
+# Creating a histogram for BMI without missing values, but only for BMI below 60
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE)
+```
+
+Plotting the BMI distribution the NHANES-dataset was visualized in @fig-bmi-hist
+
+```{r}
+#| fig-cap: "Distribution of BMI"
+#| label: fig-bmi-hist
+
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE)
+```
+
+```{r}
+# Create count barplot for eduction variable
+nhanes_small %>%
+  filter(education != "NA") %>%
+  ggplot(aes(x = education)) +
+  geom_bar()
+
+nhanes_small %>%
+  filter(diabetes != "NA") %>%
+  ggplot(aes(x = diabetes)) +
+  geom_bar()
+```
+
+```{r}
+#| label: fig-edu-t2dm
+#| fig-cap: "Counts of Education and Diabetes in NHANES"
+#| fig-subcap:
+#|   - "Education level"
+#|   - "Number of individuals with diabetes"
+#| layout-ncol: 2
+
+nhanes_small %>%
+  filter(education != "NA") %>%
+  ggplot(aes(x = education)) +
+  geom_bar()
+
+nhanes_small %>%
+  filter(diabetes != "NA") %>%
+  ggplot(aes(x = diabetes)) +
+  geom_bar()
+```
